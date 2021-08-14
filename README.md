@@ -1,4 +1,4 @@
-<h1 align="center">Bem Vindo ao Desafio Técnico Backend 👋</h1>
+<h1 align="center">Bem-Vindo ao Desafio Técnico Backend 👋</h1>
 
 
 ## ✨ Sobre o Desafio
@@ -9,7 +9,7 @@
 
 # Desenvolvendo o projeto
 <p align="rigth">
-  Para desenvolver o projeto foi utilizado o Node.js, express, linguagem Javascript e MongoDB. As tecnologias escolhidas atendemas necessidades do projeto além de terem uma maior familiariade com o autor. O design patterns escolhido para o projeto foi o MVC aplicando uma sepradação de responsabilidade na estrutura dos arquivos.
+  Para o desenvolvimento deste projeto foi utilizado o Node.js(Javascript) e o MongoDB, a arquitetura do projeto visa possibilitar uma escalabilidade e sustentabilidade do código alinhado a agilidade.
 </p>
 
 # Pré-requisitos:
@@ -26,7 +26,9 @@ git clone https://github.com/andremedeiros13/CPF;
 6) Rode npm start para iniciar o servidor de desenvolvimento.
 
 # APIS 
-As APIS possuem 4 rotas conforme exemplis a seguir:
+As APIS possuem 4 rotas conforme exemplos a seguir:
+
+Importante: Sugerimos que seja utilizado sempre o CPF formatado.
 
 1) Retorna todos os CPFs Cadastrados na base:
 - HTTP Verb: GET

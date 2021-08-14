@@ -53,11 +53,11 @@ module.exports = {
             
             const cpfs = await cpfModel.find({});                        
             const resultCPF = cpfs.map((res)=>{                
-                const newRes = [];
-                newRes.push(res.cpf);
-                newRes.push(res.created_at);                
-                return newRes;
-            
+                const newRes = {
+                    cpf: res.cpf,
+                    created_at: res.created_at
+                };                
+                return newRes;            
         })       
         
             return  resultCPF;
@@ -79,10 +79,10 @@ module.exports = {
             }
         
             const {created_at} = await findCPF(cpf);
-            const resultCPF = [{
+            const resultCPF = {
                 cpf: cpf,
                 created_at: created_at
-            }];                        
+            };                        
             return resultCPF;
 
     },
@@ -113,8 +113,7 @@ module.exports = {
                 throw new cpfException("NotFoundCpfException","CPF not found.");                
             }
 
-            const message = "CPF successfully removed.";
-            return message;       
+            return "CPF successfully removed.";            
 
     }
     
