@@ -9,7 +9,7 @@
 
 # Desenvolvendo o projeto
 <p align="rigth">
-  Para desenvolver o projeto foi utilizado o Node.js, express, linguagem Javascript e MongoDB. As tecnologias escolhidas atendemas necessidades do projeto além de terem uma maior familiariade com o autor. O design patterns escolhido para o projeto foi o MVC.
+  Para desenvolver o projeto foi utilizado o Node.js, express, linguagem Javascript e MongoDB. As tecnologias escolhidas atendemas necessidades do projeto além de terem uma maior familiariade com o autor. O design patterns escolhido para o projeto foi o MVC aplicando uma sepradação de responsabilidade na estrutura dos arquivos.
 </p>
 
 # Pré-requisitos:

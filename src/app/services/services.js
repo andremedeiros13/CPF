@@ -37,6 +37,16 @@ function isValidCPF(cpf) {
     //https://gist.github.com/joaohcrangel/8bd48bcc40b9db63bef7201143303937
 }
 
+function cpfException(type, message) {
+    this.type = type;
+    this.message = message;
+ }
+
+async function findCPF(cpf){
+    const result = await cpfModel.findOne({cpf: cpf });          
+    return result;
+ }
+
 module.exports = {     
     async findAll() {
         try {
@@ -57,55 +67,53 @@ module.exports = {
             res.status(500).send(error);
         }
     },
-    async findOne(cpf) {        
-            //Verifica se o CPF digitado é valido
-            if (!isValidCPF(cpf)) {                
-                throw new Error("CPF is not valid.");    
-            }
+    async findOne(cpf) {                    
 
-            //Verifica se existe o CPF na base de dados
-            const findCPF = await cpfModel.findOne({ cpf: cpf });  
-            if (!findCPF) {
-                throw new Error("CPF not found.");                    
+        if (!isValidCPF(cpf)) {                
+                throw new cpfException("InvalidCpfException","CPF is not valid.");    
             }
-            const {created_at} = findCPF;
-            const resultCPF = [];
-            resultCPF.push(cpf);
-            resultCPF.push(created_at);                        
+            
+            const existsCPF = await findCPF(cpf);
+            if (existsCPF == null) {                
+                throw new cpfException("NotFoundCpfException","CPF not found.");
+            }
+        
+            const {created_at} = await findCPF(cpf);
+            const resultCPF = [{
+                cpf: cpf,
+                created_at: created_at
+            }];                        
             return resultCPF;
 
     },
     async create(body) {        
-            const newCpf = new cpfModel(body);
-            console.log(body);
-            const { cpf } = newCpf;
-
-            //Verificando se o CPF já está cadastrado na base
-            const existsCPF = await cpfModel.findOne({ cpf: cpf });
-            if (existsCPF != null) {
-                throw new Error("CPF already registered.");                        
+            const newCpf = new cpfModel(body);        
+            const { cpf } = newCpf;                    
+            
+            const existsCPF = await findCPF(cpf);
+            if (existsCPF != null) {                
+                throw new cpfException("ExistsCpfException","CPF already registered.");                          
             }
-
-            //Verifica se o CPF informado é valido!
-            if (!isValidCPF(cpf)) {
-                throw new Error("CPF is not valid.");                     
+            
+            if (!isValidCPF(cpf)) {                
+                throw new cpfException("InvalidCpfException","CPF is not valid.");                 
             }
+            
             await newCpf.save();
             return newCpf;        
     },
 
-    async remove(cpf) {        
-            //Verifica se o CPF digitado é valido  
-            if (!isValidCPF(cpf)) {
-                throw new Error("CPF is not valid.");                 
+    async remove(cpf) {                    
+            if (!isValidCPF(cpf)) {                
+                throw new cpfException("InvalidCpfException","CPF is not valid.");                    
             }
-            const findCPF = await cpfModel.findOneAndDelete({ cpf: cpf });
-            //Verifica se o CPF existe na base.
-            if (!findCPF) {
-                throw new Error("CPF not found.");                 
+            
+            const existsCPF = await findCPF(cpf); 
+            if (existsCPF == null) {                
+                throw new cpfException("NotFoundCpfException","CPF not found.");                
             }
-            const message = "CPF successfully removed.";            
 
+            const message = "CPF successfully removed.";
             return message;       
 
     }
